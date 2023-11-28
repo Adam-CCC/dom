@@ -24,20 +24,6 @@
       "theme": "scada.dom.theme.Theme",
       "name": "scada.dom",
       "bootPath": "source/boot"
-    },
-
-    {
-      "class": "qxl.testtapper.Application",
-      "name": "testtapper",
-      "theme": "qx.theme.Simple",
-      "title": "Qooxdoo TestTAPper",
-      "environment": {
-        "qx.icontheme": "Tango"
-      },
-      "include": [
-        "scada.dom.test.*"
-      ],
-      "exclude": []
     }
   ]
 }
