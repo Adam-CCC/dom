@@ -6,7 +6,8 @@
       "outputPath": "compiled/source",
       "bundle": {
         "include": "qx.*"
-      }
+      },
+      "environment": {}
     },
     {
       "type": "build",
@@ -14,9 +15,11 @@
     }
   ],
   "defaultTarget": "source",
-  "locales": ["en"],
+  "locales": [
+    "en"
+  ],
   "environment": {
-      "qx.icontheme": "Tango"
+    "qx.icontheme": "Tango"
   },
   "applications": [
     {
@@ -24,6 +27,24 @@
       "theme": "scada.dom.theme.Theme",
       "name": "scada.dom",
       "bootPath": "source/boot"
+    },
+    {
+      "class": "qxl.testtapper.Application",
+      "name": "testtapper",
+      "theme": "qx.theme.Simple",
+      "title": "Qooxdoo TestTAPper",
+      "environment": {
+        "qx.icontheme": "Tango",
+        "qxl.testtapper.testNameSpace": "scada.dom.test"
+      },
+      "include": [
+        "scada.dom.test.*"
+      ],
+      "exclude": []
     }
-  ]
+  ],
+  "libraries": [
+    "."
+  ],
+  "serve": {}
 }
