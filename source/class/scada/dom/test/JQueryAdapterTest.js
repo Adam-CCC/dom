@@ -11,6 +11,7 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
                 const adapter = this.adapter;
 
                 adapter.setAttr("data-test", "123");
+                adapter.getImpl()
                 this.assertEquals("123", adapter.getAttr("data-test"));
             },
 
@@ -42,28 +43,37 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
                 const adapter = this.adapter;
 
                 adapter.setHtml("Содержимое эелемента");
-                this.assertEquals("Содержимое эелемента", adapter.getImpl().html());
+                this.assertEquals("Содержимое эелемента", adapter.getImpl()[0].innerHTML);
             },
 
             testAppendAndEmpty() {
                 const adapter = this.adapter;
 
                 adapter.append(". Конец элемента");
-                this.assertEquals("Содержимое эелемента. Конец элемента", adapter.getImpl().html());
+                this.assertEquals("Содержимое эелемента. Конец элемента", adapter.getImpl()[0].innerHTML);
+            },
+
+
+            testInsertBefore(){
+                const adapter = this.adapter;
+
+                adapter.insertBefore(adapter);
+                adapter.getImpl();
+                this.assertIdentical(2, adapter.getImpl()[0].parentNode.getElementsByTagName("p").length);
             },
 
             testEmptyHTML(){
                 const adapter = this.adapter;
 
                 adapter.empty();
-                this.assertEquals("", adapter.getImpl().html());
+                this.assertEquals("", adapter.getImpl()[0].innerHTML);
             },
 
-            testInsertBefore(){
+            testRemove(){
                 const adapter = this.adapter;
 
-                adapter.insertBefore(adapter);
-                
+                console.log(adapter.getImpl());
+                adapter.remove();
             }
 
             // testInsertBeforeAndRemove() {
