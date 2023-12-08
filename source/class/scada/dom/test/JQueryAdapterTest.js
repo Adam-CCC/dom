@@ -69,22 +69,54 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
                 this.assertEquals("", adapter.getImpl()[0].innerHTML);
             },
 
-            testRemove(){
+            testClass(){
                 const adapter = this.adapter;
 
-                console.log(adapter.getImpl());
-                adapter.remove();
+                adapter.addClass("testClass");
+                this.assertTrue(adapter.hasClass("testClass"));
+            },
+
+            testGetElementsBySelector(){
+                const adapter = this.adapter;
+
+                this.assertElement(adapter.getElementsBySelector("p").prevObject[0]);
+            },
+
+            testGetElementBySelector(){
+                const adapter = this.adapter;
+
+                this.assertObject(adapter.getElementBySelector("p"));
+            },
+
+            testAddlistener(){
+                const adapter = this.adapter;
+                let value = ""
+
+                adapter.addListenerToImpl("click", function () {
+                    value = "Click"
+                });
+                adapter.getImpl().trigger("click")
+
+                this.assertEquals("Click", value)
+            },
+
+            testGetImpl(){
+                this.assertObject(this.adapter.getImpl())
+            },
+
+            testGetClosest(){
+                const adapter = this.adapter;
+                
+                console.log(adapter.getClosest("div"));
             }
 
-            // testInsertBeforeAndRemove() {
+            // testRemove(){
             //     const adapter = this.adapter;
-            //     const otherElement = $("<div>").appendTo("body");
+            //     const parent = document.querySelector('[qxclass="qx.ui.basic.Label"]')
 
-            //     adapter.insertBefore(new scada.dom.JQueryAdapter(otherElement));
-            //     this.assertTrue(adapter.getImpl().prev().is(otherElement));
-
+            //     this.assertEquals(2, parent.getElementsByTagName("p").length);
             //     adapter.remove();
-            //     this.assertTrue(otherElement.next().length === 0);
+            //     this.assertEquals(0, parent.getElementsByTagName("p").length);
             // }
         }
     });
