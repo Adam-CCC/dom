@@ -121,12 +121,13 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
                 this.assertElement(adapter.getClosest("div").getImpl()[0]);
             },
 
-            // Добавим тест на удаление элемента
             testRemove() {
                 const adapter = this.adapter;
-
+                const parent = document.querySelector('[qxclass="qx.ui.basic.Label"]');
+                // this.assertElement(adapter.getClosest("div").getImpl()[0]);
+                this.assertEquals(2, parent.getElementsByTagName("p").length);
                 adapter.remove();
-                console.log(adapter.getImpl())
+                this.assertEquals(0, parent.getElementsByTagName("p").length);
             }
         }
     });
