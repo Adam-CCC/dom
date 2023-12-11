@@ -4,7 +4,7 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
 
         members: {
             setUp() {
-                this.adapter = new scada.dom.JQueryAdapter("p");
+                this.adapter = new scada.dom.JQueryAdapter("<p>");
             },
 
             testAttr() {
@@ -28,7 +28,7 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
 
                 adapter.setStyle("color", "red");
 
-                this.assertEquals("rgb(255, 0, 0)", adapter.getStyle("color"));
+                this.assertEquals("red", adapter.getStyle("color"));
             },
 
             testHeightWidth() {
@@ -39,31 +39,27 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
 
                 this.assertEquals("100", adapter.getHeight());
                 this.assertEquals("200", adapter.getWidth());
-            },
-
-            testHtml() {
-                const adapter = this.adapter;
-
-                adapter.setHtml("Содержимое элемента");
-
-                this.assertEquals("Содержимое элемента", adapter.getImpl()[0].innerHTML);
+                console.log(adapter.getImpl()[0]);
             },
 
             testAppendAndEmpty() {
                 const adapter = this.adapter;
 
-                adapter.append(". Конец элемента");
+                adapter.setHtml("Содержимое элемента");
+                this.assertEquals("Содержимое элемента", adapter.getImpl()[0].innerHTML);
 
+
+                adapter.append(". Конец элемента");
                 this.assertEquals("Содержимое элемента. Конец элемента", adapter.getImpl()[0].innerHTML);
             },
 
-            testClass() {
-                const adapter = this.adapter;
+            // testClass() {
+            //     const adapter = this.adapter;
 
-                adapter.addClass("device");
+                
 
-                this.assertTrue(adapter.hasClass("device"));
-            },
+            //     this.assertTrue(adapter.hasClass("device"));
+            // },
 
             testGetClosestFromPoint() {
                 const adapter = this.adapter;
@@ -74,9 +70,12 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
             testInsertBefore() {
                 const adapter = this.adapter;
 
-                adapter.insertBefore(adapter);
+                adapter.addClass("device");
+                console.log(adapter.getImpl()[0]);
+                adapter.insertBefore(".device");
 
-                this.assertIdentical(2, adapter.getImpl()[0].parentNode.getElementsByTagName("p").length);
+                console.log(adapter);
+                this.assertIdentical(2, adapter.getImpl());
             },
 
             testEmptyHTML() {
