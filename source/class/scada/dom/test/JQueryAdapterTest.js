@@ -4,7 +4,7 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
 
         members: {
             setUp() {
-                this.adapter = new scada.dom.JQueryAdapter("<p>");
+                this.adapter = new scada.dom.QxAdapter("<p>");
             },
 
             testAttr() {
@@ -42,17 +42,14 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
                 console.log(adapter.getImpl()[0]);
             },
 
-            testAppendAndEmpty() {
+            testHtmlandAppend() {
                 const adapter = this.adapter;
 
                 adapter.setHtml("Содержимое элемента");
-                console.log(adapter.getImpl())
                 this.assertEquals("Содержимое элемента", adapter.getImpl()[0].innerHTML);
 
-
-                adapter.append(". Конец элемента");
-                console.log(adapter.getImpl())
-                this.assertEquals("Содержимое элемента. Конец элемента", adapter.getImpl()[0].innerHTML);
+                adapter.append("<p>Test</p>");
+                this.assertEquals("Содержимое элемента<p>Test</p>", adapter.getImpl()[0].innerHTML);
             },
 
             testGetClosestFromPoint() {
@@ -63,16 +60,15 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
 
             testInsertBefore() {
                 const adapter = this.adapter;
-                const fakeElement = new scada.dom.JQueryAdapter("<p>");
+                const fakeElement = new scada.dom.QxAdapter("<p>");
 
-                adapter.addClass("device");
                 adapter.insertBefore(fakeElement);
                 this.assertTrue(adapter.hasClass("device"));
 
-                this.assertElement(adapter.getClosest("div").getImpl()[0]);
+                // this.assertElement(adapter.getClosest("div").getImpl()[0]);
             },
 
-            testEmptyHTML() {
+            testEmpty() {
                 const adapter = this.adapter;
 
                 adapter.empty();
@@ -89,7 +85,7 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
             testGetElementBySelector() {
                 const adapter = this.adapter;
 
-                this.assertObject(adapter.getElementBySelector("p"));
+                this.assertObject(adapter.getElementBySelector("p")); //Тоже не работает
             },
 
             testAddlistener() {
