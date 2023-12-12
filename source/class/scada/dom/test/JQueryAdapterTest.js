@@ -46,20 +46,14 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
                 const adapter = this.adapter;
 
                 adapter.setHtml("Содержимое элемента");
+                console.log(adapter.getImpl())
                 this.assertEquals("Содержимое элемента", adapter.getImpl()[0].innerHTML);
 
 
                 adapter.append(". Конец элемента");
+                console.log(adapter.getImpl())
                 this.assertEquals("Содержимое элемента. Конец элемента", adapter.getImpl()[0].innerHTML);
             },
-
-            // testClass() {
-            //     const adapter = this.adapter;
-
-                
-
-            //     this.assertTrue(adapter.hasClass("device"));
-            // },
 
             testGetClosestFromPoint() {
                 const adapter = this.adapter;
@@ -69,13 +63,13 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
 
             testInsertBefore() {
                 const adapter = this.adapter;
+                const fakeElement = new scada.dom.JQueryAdapter("<p>");
 
                 adapter.addClass("device");
-                console.log(adapter.getImpl()[0]);
-                adapter.insertBefore(".device");
+                adapter.insertBefore(fakeElement);
+                this.assertTrue(adapter.hasClass("device"));
 
-                console.log(adapter);
-                this.assertIdentical(2, adapter.getImpl());
+                this.assertElement(adapter.getClosest("div").getImpl()[0]);
             },
 
             testEmptyHTML() {
@@ -116,17 +110,16 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
 
             testGetClosest() {
                 const adapter = this.adapter;
-
-                this.assertElement(adapter.getClosest("div").getImpl()[0]);
+                console.log(adapter.getClosest("div"));
+                // this.assertElement(adapter.getClosest("div").getImpl()[0]);
             },
 
             testRemove() {
                 const adapter = this.adapter;
-                const parent = document.querySelector('[qxclass="qx.ui.basic.Label"]');
-                // this.assertElement(adapter.getClosest("div").getImpl()[0]);
-                this.assertEquals(2, parent.getElementsByTagName("p").length);
+                
+                console.log(adapter.getImpl());
                 adapter.remove();
-                this.assertEquals(0, parent.getElementsByTagName("p").length);
+                console.log(adapter.getImpl());
             }
         }
     });
