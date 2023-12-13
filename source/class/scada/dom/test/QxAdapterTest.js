@@ -1,14 +1,15 @@
-qx.Class.define("scada.dom.test.JQueryAdapterTest",
+qx.Class.define("scada.dom.test.QxAdapterTest",
     {
         extend: qx.dev.unit.TestCase,
 
         members: {
             setUp() {
-                this.adapter = new scada.dom.JQueryAdapter("<p>");
+                this.adapter = new scada.dom.QxAdapter("<p>");
             },
 
             testAttr() {
                 const adapter = this.adapter;
+                document.body.append(adapter.getImpl()[0])
                 adapter.setAttr("data-test", "123");
 
                 this.assertEquals("123", adapter.getAttr("data-test"));
@@ -59,8 +60,7 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
 
             testInsertBefore() {
                 const adapter = this.adapter;
-                const fakeElement = new scada.dom.JQueryAdapter("<p>Raptor</p>");
-                document.body.append(adapter.getImpl()[0])
+                const fakeElement = new scada.dom.QxAdapter("<p>Raptor</p>");
 
                 fakeElement.insertBefore(adapter);
                 console.log(adapter.getImpl());
