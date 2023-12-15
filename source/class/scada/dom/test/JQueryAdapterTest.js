@@ -60,11 +60,18 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
             testInsertBefore() {
                 const adapter = this.adapter;
                 const fakeElement = new scada.dom.JQueryAdapter("<p>Raptor</p>");
-                document.body.append(adapter.getImpl()[0])
+                const getClassName = document.body.getElementsByClassName("tests");
+                adapter.addClass("tests");
+                fakeElement.addClass("tests");
 
+                document.body.append(adapter.getImpl()[0])
                 fakeElement.insertBefore(adapter);
-                console.log(adapter.getImpl());
-                this.assertEquals("<p></p><p>Raptor</p>", adapter.getImpl()[0].parentElement.innerHTML);
+
+                this.assertEquals('<p class="tests">Raptor</p>', getClassName[0].outerHTML);
+                this.assertEquals('<p class="tests"></p>', getClassName[1].outerHTML);
+
+                getClassName[0].remove();
+                getClassName[0].remove();
             },
 
             testEmpty() {
@@ -78,13 +85,19 @@ qx.Class.define("scada.dom.test.JQueryAdapterTest",
             testGetElementsBySelector() {
                 const adapter = this.adapter;
 
-                this.assertElement(adapter.getElementsBySelector("p").prevObject[0]);
+                adapter.setHtml("<p><p></p></p>")
+
+                this.assertEquals(3, adapter.getElementsBySelector("p").length)
             },
 
             testGetElementBySelector() {
                 const adapter = this.adapter;
+                
+                adapter.setHtml("<p></p>");
+                const result = adapter.getElementBySelector("p");
 
-                this.assertObject(adapter.getElementBySelector("p")); //Тоже не работает
+                this.assertTrue(result instanceof scada.dom.JQueryAdapter);
+                this.assertEquals('p', result.getImpl()[0].localName);
             },
 
             testAddlistener() {
